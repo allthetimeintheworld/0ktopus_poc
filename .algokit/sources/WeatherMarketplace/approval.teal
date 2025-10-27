@@ -1,0 +1,285 @@
+#pragma version 10
+#pragma typetrack false
+
+
+main:
+    intcblock 1 0
+    bytecblock 0x151f7c75 "total_tokens_sold" "weather_asa_id" "token_price" "token_duration" "is_active"
+    txn ApplicationID
+    bnz main_after_if_else@2
+
+
+
+    bytec_3
+    pushint 10000000
+    app_global_put
+
+
+
+    bytec_2
+    intc_1
+    app_global_put
+
+
+
+    bytec 4
+    pushint 3600
+    app_global_put
+
+
+
+    bytec_1
+    intc_1
+    app_global_put
+
+
+
+    bytec 5
+    pushbytes 0x80
+    app_global_put
+
+main_after_if_else@2:
+
+
+    txn NumAppArgs
+    bz main_bare_routing@13
+    pushbytess 0x79bba1bb 0x6f8977e8 0xdbced911 0x9ada3543 0x5e80db51 0x564c8862 0xde20dcaa 0x2eeebbb9
+    txna ApplicationArgs 0
+    match main_get_token_price_route@5 main_get_weather_asa_id_route@6 main_set_weather_asa_id_route@7 main_get_token_duration_route@8 main_record_token_sale_route@9 main_get_total_sales_route@10 main_is_contract_active_route@11 main_get_contract_info_route@12
+
+main_after_if_else@15:
+
+
+    intc_1
+    return
+
+main_get_contract_info_route@12:
+
+
+    txn OnCompletion
+    !
+    assert
+    txn ApplicationID
+    assert
+    pushbytes 0x151f7c750036576561746865724d61726b6574706c6163652076312e30202d20546f6b656e697a656420576561746865722041504920416363657373
+    log
+    intc_0
+    return
+
+main_is_contract_active_route@11:
+
+
+    txn OnCompletion
+    !
+    assert
+    txn ApplicationID
+    assert
+    callsub is_contract_active
+    bytec_0
+    swap
+    concat
+    log
+    intc_0
+    return
+
+main_get_total_sales_route@10:
+
+
+    txn OnCompletion
+    !
+    assert
+    txn ApplicationID
+    assert
+    callsub get_total_sales
+    bytec_0
+    swap
+    concat
+    log
+    intc_0
+    return
+
+main_record_token_sale_route@9:
+
+
+    txn OnCompletion
+    !
+    assert
+    txn ApplicationID
+    assert
+    callsub record_token_sale
+    bytec_0
+    swap
+    concat
+    log
+    intc_0
+    return
+
+main_get_token_duration_route@8:
+
+
+    txn OnCompletion
+    !
+    assert
+    txn ApplicationID
+    assert
+    callsub get_token_duration
+    bytec_0
+    swap
+    concat
+    log
+    intc_0
+    return
+
+main_set_weather_asa_id_route@7:
+
+
+    txn OnCompletion
+    !
+    assert
+    txn ApplicationID
+    assert
+
+
+    txna ApplicationArgs 1
+
+
+    callsub set_weather_asa_id
+    intc_0
+    return
+
+main_get_weather_asa_id_route@6:
+
+
+    txn OnCompletion
+    !
+    assert
+    txn ApplicationID
+    assert
+    callsub get_weather_asa_id
+    bytec_0
+    swap
+    concat
+    log
+    intc_0
+    return
+
+main_get_token_price_route@5:
+
+
+    txn OnCompletion
+    !
+    assert
+    txn ApplicationID
+    assert
+    callsub get_token_price
+    bytec_0
+    swap
+    concat
+    log
+    intc_0
+    return
+
+main_bare_routing@13:
+
+
+    txn OnCompletion
+    bnz main_after_if_else@15
+    txn ApplicationID
+    !
+    assert
+    intc_0
+    return
+
+
+
+get_token_price:
+
+
+    intc_1
+    bytec_3
+    app_global_get_ex
+    assert
+    itob
+    retsub
+
+
+
+get_weather_asa_id:
+
+
+    intc_1
+    bytec_2
+    app_global_get_ex
+    assert
+    itob
+    retsub
+
+
+
+set_weather_asa_id:
+
+
+
+    proto 1 0
+
+
+    frame_dig -1
+    btoi
+    bytec_2
+    swap
+    app_global_put
+    retsub
+
+
+
+get_token_duration:
+
+
+    intc_1
+    bytec 4
+    app_global_get_ex
+    assert
+    itob
+    retsub
+
+
+
+record_token_sale:
+
+
+    intc_1
+    bytec_1
+    app_global_get_ex
+    assert
+    intc_0
+    +
+    bytec_1
+    dig 1
+    app_global_put
+
+
+    itob
+    retsub
+
+
+
+get_total_sales:
+
+
+    intc_1
+    bytec_1
+    app_global_get_ex
+    assert
+    itob
+    retsub
+
+
+
+is_contract_active:
+
+
+    intc_1
+    bytec 5
+    app_global_get_ex
+    assert
+    retsub

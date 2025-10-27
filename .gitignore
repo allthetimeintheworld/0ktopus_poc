@@ -1,0 +1,70 @@
+# Environment variables (KEEP LOCAL - Contains secrets!)
+.env
+.env.local
+.env.production
+*.env
+
+# Wallet files (KEEP LOCAL - Contains private keys!)
+nft_config.json
+temp_wallet.json
+*.wallet
+*.mnemonic
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Redis dumps
+dump.rdb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Security - Keep these local
+create_nft_pera.py
+private_keys/
+secrets/
+
+# Database files (if you add one later)
+*.db
+*.sqlite
+*.sqlite3
+CODEBASE_REVIEW.md
+CLEANUP_COMPLETE.md	
+CLEANUP_GUIDE.md
+james_nft_add.md
+idea.md
+BRAND_GUIDE.md
+FRONTEND_FIX.md
