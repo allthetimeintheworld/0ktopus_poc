@@ -25,7 +25,8 @@ load_dotenv()
 
 # Configuration
 INDEXER_URL = os.getenv('ALGORAND_INDEXER_URL', 'https://testnet-idx.algonode.cloud')
-NFT_ASSET_ID = int(os.getenv('NFT_ASSET_ID', '0'))
+nft_asset_id_str = os.getenv('NFT_ASSET_ID', '0').strip()
+NFT_ASSET_ID = int(nft_asset_id_str) if nft_asset_id_str else 0
 JWT_SECRET = os.getenv('JWT_SECRET', secrets.token_hex(32))
 REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
 REDIS_PORT = int(os.getenv('REDIS_PORT', '6379'))
@@ -39,6 +40,11 @@ app = FastAPI(
     description="API authentication using Algorand NFT ownership",
     version="1.0.0"
 )
+
+# Warn if NFT_ASSET_ID is not configured
+if NFT_ASSET_ID == 0:
+    print("⚠️  WARNING: NFT_ASSET_ID is not set in .env file!")
+    print("   Please mint an NFT and update the NFT_ASSET_ID in your .env file")
 
 # CORS middleware
 app.add_middleware(
